@@ -1,0 +1,32 @@
+git clone
+.env
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan db:seed
+
+git branch dev
+git checkout dev
+git add .
+git commit -m "e"
+
+php artisan make:migrate create_books_table
+	    $table->id();
+            $table->string('title',255);
+            $table->string('author',255);
+            $table->string('isbn',13);
+            $table->smallInteger('stock')->default(0);
+            $table->float('price',8,2)->nullable();
+            $table->timestamps();
+php artisan migrate
+php artisan make:factory BookFactory
+return[
+	    'title' => fake()->sentence(),
+            'author' => fake()->name(),
+            'isbn' => fake()->isbn13(),
+            'price' => fake()->randomFloat(2,10,100),
+            'stock' => fake()->numberBetween(1,100),
+]
+Book::factory(200)->create();
+php artisan migrate
+php artisan db:seed
